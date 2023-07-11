@@ -35,14 +35,14 @@ class TiAda(Optimizer):
         loss = None
         for p in self.params:
             if p.grad is not None:
-                grad2 = torch.mul(p.grad, p.grad)
-                self.v.add_(grad2.sum())
+                self.v.add_(torch.mul(p.grad, p.grad).sum())
 
-        ratio = self.v.pow(self.alpha)
+        denominator = self.v.pow(self.alpha)
         if self.opponent_optim is not None:
-            ratio = torch.max(ratio, self.opponent_optim.v.pow(self.alpha))
+            denominator = torch.max(denominator, self.opponent_optim.v.pow(self.alpha))
+        denominator.add_(1e-10) #for divition by zero
 
         for p in self.params:
             if p.grad is not None:
-                p.sub_(p.grad.mul_(self.lr).div_(ratio.add_(1e-10)))
+                p.sub_(p.grad.div_(denominator).mul_(self.lr))
         return loss
