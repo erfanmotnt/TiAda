@@ -51,8 +51,9 @@ while i < number_of_iterations:
     optim_x.step()
 
     if i%1000 == 0:
-        print('x_grad', f'step: {i}', f'value: {x_grad_norm}')
-        print('x', f'step: {i}', f'value: {x.item()}')
-        print('y', f'step: {i}', f'value: {y.item()}')
+        print(f"step {i}:")
+        print(f'\tx gradian: {x_grad_norm}')
+        print(f'\tx value: {x.item()}')
+        print(f'\ty value: {y.item()}')
     if x_grad_norm > 1e4:
         break
