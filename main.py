@@ -8,7 +8,7 @@ number_of_iterations = 8000
 alpha = 0.6
 beta = 0.4
 L = 2
-is_TiAda = False
+is_TiAda = True
 initial_x = 1
 grad_noise_x = 0
 initial_y = 0.01
@@ -31,8 +31,8 @@ if is_TiAda:
     optim_y = TiAda([y], lr=learning_rate_y, alpha=beta)
     optim_x = TiAda([x], opponent_optim=optim_y, lr=learning_rate_x, alpha=alpha)
 else :
-    optim_x = Adagrad([x], lr=learning_rate_x)
     optim_y = Adagrad([y], lr=learning_rate_y)
+    optim_x = Adagrad([x], lr=learning_rate_x)
 print("end initialization")
 
 i = 0
